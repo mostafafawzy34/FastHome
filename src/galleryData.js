@@ -16,15 +16,15 @@ export const galleryImages = [
     "featured": true
   },
   {
+    "src": "/gallery/039.jpg",
+    "featured": false
+  },
+  {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.40%20(1).jpeg",
     "featured": false
   },
   {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.40%20(2).jpeg",
-    "featured": false
-  },
-  {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.40%20(3).jpeg",
     "featured": false
   },
   {
@@ -37,10 +37,6 @@ export const galleryImages = [
   },
   {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.41%20(1).jpeg",
-    "featured": false
-  },
-  {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.41%20(2).jpeg",
     "featured": false
   },
   {
@@ -112,15 +108,7 @@ export const galleryImages = [
     "featured": false
   },
   {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.44.jpeg",
-    "featured": false
-  },
-  {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.45%20(1).jpeg",
-    "featured": false
-  },
-  {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.45%20(2).jpeg",
     "featured": false
   },
   {
@@ -184,10 +172,6 @@ export const galleryImages = [
     "featured": false
   },
   {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.48%20(3).jpeg",
-    "featured": false
-  },
-  {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.48%20(4).jpeg",
     "featured": false
   },
@@ -197,10 +181,6 @@ export const galleryImages = [
   },
   {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.49%20(1).jpeg",
-    "featured": false
-  },
-  {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.49%20(2).jpeg",
     "featured": false
   },
   {
@@ -244,10 +224,6 @@ export const galleryImages = [
     "featured": false
   },
   {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.51%20(3).jpeg",
-    "featured": false
-  },
-  {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.51%20(4).jpeg",
     "featured": false
   },
@@ -281,10 +257,6 @@ export const galleryImages = [
   },
   {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.53%20(2).jpeg",
-    "featured": false
-  },
-  {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.53%20(3).jpeg",
     "featured": false
   },
   {
