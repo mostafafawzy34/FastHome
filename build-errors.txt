@@ -1,0 +1,14 @@
+
+> fasthome@0.0.0 build
+> vite build
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 16 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.83 kB │ gzip:  0.45 kB
+dist/assets/index-BvR8U0WH.css   14.64 kB │ gzip:  3.63 kB
+dist/assets/index-C4Dei9L4.js   233.18 kB │ gzip: 71.44 kB
+
+✓ built in 469ms
