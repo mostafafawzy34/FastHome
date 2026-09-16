@@ -256,10 +256,6 @@ export const galleryImages = [
     "featured": false
   },
   {
-    "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.53%20(2).jpeg",
-    "featured": false
-  },
-  {
     "src": "/gallery/WhatsApp%20Image%202026-09-16%20at%2015.37.53%20(4).jpeg",
     "featured": false
   },
