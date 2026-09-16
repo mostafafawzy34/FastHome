@@ -1689,7 +1689,7 @@ function App() {
   {/* QR Code Container */}
   <div style={{ marginTop: "15px", background: "#ffffff", padding: "10px", borderRadius: "8px", display: "inline-block" }}>
     <QRCodeSVG 
-      value="https://your-site.vercel.app" 
+      value="https://fast-home.vercel.app/" 
       size={140}
       level="H"
       includeMargin={false}
