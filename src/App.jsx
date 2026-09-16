@@ -1,10 +1,50 @@
 import { useState } from "react";
+import { galleryImages } from "./galleryData";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showAllGallery, setShowAllGallery] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const closeMenu = () => {
     setMenuOpen(false);
+  };
+
+  const featuredImages = galleryImages.filter((image) => image.featured);
+  const otherImages = galleryImages.filter((image) => !image.featured);
+
+  const openImage = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+  };
+
+  const showPreviousImage = () => {
+    if (!selectedImage) return;
+
+    const currentIndex = galleryImages.findIndex(
+      (image) => image.src === selectedImage.src
+    );
+
+    const previousIndex =
+      currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
+
+    setSelectedImage(galleryImages[previousIndex]);
+  };
+
+  const showNextImage = () => {
+    if (!selectedImage) return;
+
+    const currentIndex = galleryImages.findIndex(
+      (image) => image.src === selectedImage.src
+    );
+
+    const nextIndex =
+      currentIndex === galleryImages.length - 1 ? 0 : currentIndex + 1;
+
+    setSelectedImage(galleryImages[nextIndex]);
   };
 
   return (
@@ -36,6 +76,10 @@ function App() {
 
             <a href="#services" onClick={closeMenu}>
               خدماتنا
+            </a>
+
+            <a href="#gallery" onClick={closeMenu}>
+              أعمالنا
             </a>
 
             <a href="#about" onClick={closeMenu}>
@@ -73,13 +117,11 @@ function App() {
       </header>
 
 
-      {/* ================= HERO ================= */}
-
       <main>
 
-        <section className="hero" id="home">
+        {/* ================= HERO ================= */}
 
-          {/* Animated background shapes */}
+        <section className="hero" id="home">
 
           <div className="hero-orb orb-one"></div>
           <div className="hero-orb orb-two"></div>
@@ -132,7 +174,6 @@ function App() {
                 </a>
 
               </div>
-
 
               <div className="hero-trust">
 
@@ -286,7 +327,6 @@ function App() {
 
 
             <div className="services-grid">
-
 
               {/* Plumbing */}
 
@@ -493,12 +533,648 @@ function App() {
         </section>
 
 
+        {/* ================= GALLERY ================= */}
+
+        <section className="gallery-section" id="gallery">
+
+          <style>{`
+            .gallery-section {
+              position: relative;
+              padding: 110px 0;
+              overflow: hidden;
+              background: #f8f8f6;
+            }
+
+            .gallery-section::before {
+              content: "";
+              position: absolute;
+              width: 420px;
+              height: 420px;
+              border-radius: 50%;
+              background: rgba(255, 210, 28, 0.10);
+              top: -180px;
+              left: -140px;
+              filter: blur(5px);
+              pointer-events: none;
+            }
+
+            .gallery-section::after {
+              content: "";
+              position: absolute;
+              width: 300px;
+              height: 300px;
+              border-radius: 50%;
+              background: rgba(0, 0, 0, 0.035);
+              bottom: -140px;
+              right: -100px;
+              pointer-events: none;
+            }
+
+            .gallery-heading {
+              position: relative;
+              z-index: 2;
+              text-align: center;
+              max-width: 720px;
+              margin: 0 auto 55px;
+            }
+
+            .gallery-label {
+              display: inline-flex;
+              align-items: center;
+              gap: 9px;
+              padding: 9px 16px;
+              border-radius: 999px;
+              background: rgba(255, 210, 28, 0.14);
+              color: #111;
+              font-size: 14px;
+              font-weight: 800;
+              margin-bottom: 18px;
+            }
+
+            .gallery-label::before {
+              content: "";
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: #ffd21c;
+              box-shadow: 0 0 0 5px rgba(255, 210, 28, 0.16);
+            }
+
+            .gallery-heading h2 {
+              margin: 0 0 18px;
+              font-size: clamp(34px, 5vw, 58px);
+              line-height: 1.1;
+              font-weight: 900;
+              color: #111;
+            }
+
+            .gallery-heading h2 span {
+              position: relative;
+              display: inline-block;
+              z-index: 1;
+            }
+
+            .gallery-heading h2 span::after {
+              content: "";
+              position: absolute;
+              height: 12px;
+              left: 0;
+              right: 0;
+              bottom: 1px;
+              background: #ffd21c;
+              z-index: -1;
+              transform: skewX(-18deg);
+              opacity: 0.9;
+            }
+
+            .gallery-heading p {
+              margin: 0;
+              color: #666;
+              font-size: 17px;
+              line-height: 1.9;
+            }
+
+            .gallery-featured {
+              position: relative;
+              z-index: 2;
+              display: grid;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 18px;
+            }
+
+            .gallery-card {
+              position: relative;
+              overflow: hidden;
+              border-radius: 24px;
+              background: #ddd;
+              aspect-ratio: 4 / 3;
+              cursor: pointer;
+              box-shadow: 0 18px 45px rgba(0, 0, 0, 0.10);
+              transform: translateY(0);
+              transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
+            }
+
+            .gallery-card:hover {
+              transform: translateY(-8px);
+              box-shadow: 0 28px 60px rgba(0, 0, 0, 0.17);
+            }
+
+            .gallery-card img {
+              width: 100%;
+              height: 100%;
+              display: block;
+              object-fit: cover;
+              transition: transform 0.7s ease;
+            }
+
+            .gallery-card:hover img {
+              transform: scale(1.08);
+            }
+
+            .gallery-overlay {
+              position: absolute;
+              inset: 0;
+              display: flex;
+              align-items: flex-end;
+              justify-content: space-between;
+              padding: 20px;
+              background:
+                linear-gradient(
+                  to top,
+                  rgba(0, 0, 0, 0.65),
+                  rgba(0, 0, 0, 0.02) 60%
+                );
+              opacity: 0;
+              transition: opacity 0.35s ease;
+            }
+
+            .gallery-card:hover .gallery-overlay {
+              opacity: 1;
+            }
+
+            .gallery-overlay span {
+              color: white;
+              font-size: 14px;
+              font-weight: 800;
+            }
+
+            .gallery-view-icon {
+              width: 44px;
+              height: 44px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+              background: #ffd21c;
+              color: #111;
+              font-size: 20px;
+              font-weight: 900;
+            }
+
+            .gallery-more {
+              position: relative;
+              z-index: 2;
+              display: flex;
+              justify-content: center;
+              margin-top: 35px;
+            }
+
+            .gallery-more-button {
+              border: 0;
+              cursor: pointer;
+              padding: 15px 28px;
+              border-radius: 999px;
+              background: #111;
+              color: white;
+              font-family: inherit;
+              font-size: 15px;
+              font-weight: 800;
+              display: inline-flex;
+              align-items: center;
+              gap: 12px;
+              box-shadow: 0 15px 35px rgba(0, 0, 0, 0.16);
+              transition:
+                transform 0.3s ease,
+                background 0.3s ease;
+            }
+
+            .gallery-more-button:hover {
+              transform: translateY(-4px);
+              background: #222;
+            }
+
+            .gallery-more-button span {
+              font-size: 18px;
+            }
+
+            .gallery-all {
+              position: relative;
+              z-index: 2;
+              display: grid;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 18px;
+              margin-top: 24px;
+              animation: galleryAppear 0.5s ease both;
+            }
+
+            @keyframes galleryAppear {
+              from {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+
+            .gallery-all .gallery-card {
+              aspect-ratio: 4 / 3;
+            }
+
+            .gallery-count {
+              margin-top: 18px;
+              color: #777;
+              font-size: 13px;
+              text-align: center;
+            }
+
+            .gallery-lightbox {
+              position: fixed;
+              inset: 0;
+              z-index: 9999;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 30px;
+              background: rgba(0, 0, 0, 0.94);
+              animation: lightboxFade 0.25s ease both;
+            }
+
+            @keyframes lightboxFade {
+              from {
+                opacity: 0;
+              }
+
+              to {
+                opacity: 1;
+              }
+            }
+
+            .gallery-lightbox-image {
+              max-width: min(1100px, 90vw);
+              max-height: 82vh;
+              width: auto;
+              height: auto;
+              object-fit: contain;
+              border-radius: 12px;
+              box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+              animation: imageZoom 0.3s ease both;
+            }
+
+            @keyframes imageZoom {
+              from {
+                opacity: 0;
+                transform: scale(0.94);
+              }
+
+              to {
+                opacity: 1;
+                transform: scale(1);
+              }
+            }
+
+            .gallery-close {
+              position: fixed;
+              top: 22px;
+              left: 22px;
+              width: 48px;
+              height: 48px;
+              border: 0;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.12);
+              color: white;
+              cursor: pointer;
+              font-size: 28px;
+              line-height: 1;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: background 0.25s ease;
+              z-index: 10001;
+            }
+
+            .gallery-close:hover {
+              background: rgba(255, 255, 255, 0.24);
+            }
+
+            .gallery-nav {
+              position: fixed;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 52px;
+              height: 52px;
+              border: 0;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.12);
+              color: white;
+              cursor: pointer;
+              font-size: 28px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition:
+                background 0.25s ease,
+                transform 0.25s ease;
+              z-index: 10001;
+            }
+
+            .gallery-nav:hover {
+              background: rgba(255, 255, 255, 0.24);
+            }
+
+            .gallery-prev {
+              left: 22px;
+            }
+
+            .gallery-next {
+              right: 22px;
+            }
+
+            .gallery-counter {
+              position: fixed;
+              bottom: 25px;
+              left: 50%;
+              transform: translateX(-50%);
+              color: rgba(255, 255, 255, 0.85);
+              font-size: 14px;
+              font-weight: 700;
+              background: rgba(255, 255, 255, 0.1);
+              padding: 8px 15px;
+              border-radius: 999px;
+              z-index: 10001;
+            }
+
+            @media (max-width: 1000px) {
+              .gallery-featured,
+              .gallery-all {
+                grid-template-columns: repeat(2, 1fr);
+              }
+            }
+
+            @media (max-width: 600px) {
+              .gallery-section {
+                padding: 75px 0;
+              }
+
+              .gallery-heading {
+                margin-bottom: 35px;
+              }
+
+              .gallery-heading p {
+                font-size: 15px;
+              }
+
+              .gallery-featured,
+              .gallery-all {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+              }
+
+              .gallery-card {
+                border-radius: 15px;
+              }
+
+              .gallery-overlay {
+                opacity: 1;
+                padding: 10px;
+              }
+
+              .gallery-overlay span {
+                font-size: 11px;
+              }
+
+              .gallery-view-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
+              }
+
+              .gallery-lightbox {
+                padding: 15px;
+              }
+
+              .gallery-lightbox-image {
+                max-width: 94vw;
+                max-height: 75vh;
+                border-radius: 8px;
+              }
+
+              .gallery-close {
+                top: 14px;
+                left: 14px;
+                width: 42px;
+                height: 42px;
+                font-size: 23px;
+              }
+
+              .gallery-nav {
+                width: 42px;
+                height: 42px;
+                font-size: 22px;
+              }
+
+              .gallery-prev {
+                left: 10px;
+              }
+
+              .gallery-next {
+                right: 10px;
+              }
+            }
+          `}</style>
+
+
+          <div className="container">
+
+            <div className="gallery-heading">
+
+              <div className="gallery-label">
+                من أعمالنا
+              </div>
+
+              <h2>
+                شغل اتعمل
+                <span> على أرض الواقع</span>
+              </h2>
+
+              <p>
+                شوف بعض من أعمال Fast Home Fix والمشاريع اللي نفذناها
+                في خدمات الصيانة والتركيب والتجهيز.
+              </p>
+
+            </div>
+
+
+            {/* FEATURED PHOTOS */}
+
+            {featuredImages.length > 0 && (
+              <div className="gallery-featured">
+
+                {featuredImages.map((image, index) => (
+                  <div
+                    className="gallery-card"
+                    key={image.src}
+                    onClick={() => openImage(image)}
+                  >
+
+                    <img
+                      src={image.src}
+                      alt={`من أعمال Fast Home Fix ${index + 1}`}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+
+                    <div className="gallery-overlay">
+                      <span>من أعمالنا</span>
+
+                      <div className="gallery-view-icon">
+                        ↗
+                      </div>
+                    </div>
+
+                  </div>
+                ))}
+
+              </div>
+            )}
+
+
+            {/* ALL OTHER PHOTOS */}
+
+            {showAllGallery && otherImages.length > 0 && (
+              <div className="gallery-all">
+
+                {otherImages.map((image, index) => (
+                  <div
+                    className="gallery-card"
+                    key={image.src}
+                    onClick={() => openImage(image)}
+                  >
+
+                    <img
+                      src={image.src}
+                      alt={`من أعمال Fast Home Fix ${index + 5}`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+
+                    <div className="gallery-overlay">
+                      <span>من أعمالنا</span>
+
+                      <div className="gallery-view-icon">
+                        ↗
+                      </div>
+                    </div>
+
+                  </div>
+                ))}
+
+              </div>
+            )}
+
+
+            {otherImages.length > 0 && (
+              <div className="gallery-more">
+
+                <button
+                  type="button"
+                  className="gallery-more-button"
+                  onClick={() => setShowAllGallery(!showAllGallery)}
+                >
+
+                  {showAllGallery
+                    ? "إخفاء باقي الأعمال"
+                    : "عرض جميع الأعمال"}
+
+                  <span>
+                    {showAllGallery ? "↑" : "↓"}
+                  </span>
+
+                </button>
+
+              </div>
+            )}
+
+
+            <div className="gallery-count">
+              {galleryImages.length > 0
+                ? `عرض ${galleryImages.length} صورة من أعمال Fast Home Fix`
+                : "أضف صور أعمالك إلى مجلد gallery"}
+            </div>
+
+          </div>
+
+
+          {/* ================= FULLSCREEN IMAGE VIEWER ================= */}
+
+          {selectedImage && (
+
+            <div
+              className="gallery-lightbox"
+              onClick={closeImage}
+            >
+
+              <button
+                type="button"
+                className="gallery-close"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  closeImage();
+                }}
+                aria-label="إغلاق الصورة"
+              >
+                ×
+              </button>
+
+
+              <button
+                type="button"
+                className="gallery-nav gallery-prev"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showPreviousImage();
+                }}
+                aria-label="الصورة السابقة"
+              >
+                ‹
+              </button>
+
+
+              <img
+                src={selectedImage.src}
+                alt="Fast Home Fix"
+                className="gallery-lightbox-image"
+                onClick={(event) => event.stopPropagation()}
+              />
+
+
+              <button
+                type="button"
+                className="gallery-nav gallery-next"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  showNextImage();
+                }}
+                aria-label="الصورة التالية"
+              >
+                ›
+              </button>
+
+
+              <div className="gallery-counter">
+                {galleryImages.findIndex(
+                  (image) => image.src === selectedImage.src
+                ) + 1}
+                {" / "}
+                {galleryImages.length}
+              </div>
+
+            </div>
+
+          )}
+
+        </section>
+
+
         {/* ================= ABOUT ================= */}
 
         <section className="about section" id="about">
 
           <div className="container about-container">
-
 
             <div className="about-image">
 
@@ -649,9 +1325,6 @@ function App() {
               </div>
 
             </div>
-
-
-           
 
           </div>
 
@@ -981,6 +1654,10 @@ function App() {
 
             <a href="#services">
               خدماتنا
+            </a>
+
+            <a href="#gallery">
+              أعمالنا
             </a>
 
             <a href="#about">
