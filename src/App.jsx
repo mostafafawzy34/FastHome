@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { galleryImages } from "./galleryData";
+import { QRCodeSVG } from "qrcode.react";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -1677,15 +1678,25 @@ function App() {
 
           <div className="footer-contact">
 
-            <a href="tel:+201068916168">
-              010 6891 6168
-            </a>
+  <a href="tel:+201068916168">
+    010 6891 6168
+  </a>
 
-            <a href="tel:+201146625801">
-              011 4662 5801
-            </a>
+  <a href="tel:+201146625801">
+    011 4662 5801
+  </a>
 
-          </div>
+  {/* QR Code Container */}
+  <div style={{ marginTop: "15px", background: "#ffffff", padding: "10px", borderRadius: "8px", display: "inline-block" }}>
+    <QRCodeSVG 
+      value="https://your-site.vercel.app" 
+      size={140}
+      level="H"
+      includeMargin={false}
+    />
+  </div>
+
+</div>
 
         </div>
 

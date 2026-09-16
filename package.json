@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "generate-gallery": "node scripts/generate-gallery.mjs"
-},
+    "dev": "vite",
+    "build": "vite build",
+    "generate-gallery": "node scripts/generate-gallery.mjs"
+  },
   "dependencies": {
+    "qrcode.react": "^4.2.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
